@@ -26,4 +26,13 @@ public class MainWindowController {
         Node serverView = serverLoader.load();
         this.content.getChildren().add(serverView);
     }
+
+    @FXML
+    private void onClientClicked() throws IOException{
+        this.content.getChildren().clear();
+        FXMLLoader clientLoader = new FXMLLoader(getClass().getResource("/view/ClientView.fxml"));
+        clientLoader.setController(new ClientController(this));
+        Node serverView = clientLoader.load();
+        this.content.getChildren().add(serverView);
+    }
 }

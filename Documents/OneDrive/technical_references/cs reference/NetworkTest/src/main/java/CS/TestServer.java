@@ -16,16 +16,17 @@ public class TestServer extends Thread{
     ServerController parent;
 
 
-    public TestServer(int port, ServerController parent) throws IOException {
+    public TestServer(int port, ServerController parent) throws IOException{
         this.parent = parent;
         serverSocket = new ServerSocket(port);
         serverSocket.setSoTimeout(Integer.MAX_VALUE);
     }
 
     public void run() {
+        parent.setMessage(("Waiting for client on port " +
+                serverSocket.getLocalPort() + "..."));
         while(true) {
             try{
-                parent.setMessage("Waiting for client on port " + serverSocket.getLocalPort() + "…");
                 Socket server = serverSocket.accept();
 
                 parent.setMessage("Just connected to " + server.getRemoteSocketAddress());
@@ -33,7 +34,7 @@ public class TestServer extends Thread{
 
                 parent.setMessage(in.readUTF());
                 DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
+                out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nMessage reveived");
                 server.close();
             }catch (SocketTimeoutException e) {
                 System.out.println("Socket Timed out!");

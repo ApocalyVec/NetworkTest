@@ -1,5 +1,7 @@
 package CS;
 
+import Controller.ClientController;
+import Controller.ServerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,27 +11,38 @@ import javafx.stage.Stage;
 import java.net.*;
 import java.io.*;
 
-public class TestClient extends Thread{
+public class TestClient {
+    private Socket clientSocket;
+    private ClientController parent;
+    private String serverName;
+    private int port;
 
-    public void run() {
-//        String serverName = args[0];
-//        int port = Integer.parseInt(args[1]);
-//        try {
-//            System.out.println("Connecting to " + serverName + " on port " + port);
-//            Socket client = new Socket(serverName, port);
-//
-//            System.out.println("Just connected to " + client.getRemoteSocketAddress());
-//            OutputStream outToServer = client.getOutputStream();
-//            DataOutputStream out = new DataOutputStream(outToServer);
-//
-//            out.writeUTF("Hello from " + client.getLocalSocketAddress());
-//            InputStream inFromServer = client.getInputStream();
-//            DataInputStream in = new DataInputStream(inFromServer);
-//
-//            System.out.println("Server says " + in.readUTF());
-//            client.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+    public TestClient(ClientController clientController, String serverName, int port) throws IOException{
+        this.parent = clientController;
+        this.serverName = serverName;
+        this.port = port;
+        clientSocket = new Socket(serverName, port);
+        parent.setMsgFromServer("Connecting to " + serverName + " on port " + port);
+        parent.setMsgFromServer(("Just connected to " + clientSocket.getRemoteSocketAddress()));
+    }
+
+    public void sendMsgToServer(String s) throws IOException{
+        if(clientSocket.isClosed()) {
+            clientSocket = new Socket(serverName, port);
+        }
+        try{
+            OutputStream outToServer = clientSocket.getOutputStream();
+            DataOutputStream out = new DataOutputStream(outToServer);
+
+            out.writeUTF(s);
+            InputStream inFromServer = clientSocket.getInputStream();
+            DataInputStream in = new DataInputStream(inFromServer);
+
+            parent.setMsgFromServer("Server says " + in.readUTF());
+            clientSocket.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+            parent.setMsgFromServer(e.getMessage());
+        }
     }
 }

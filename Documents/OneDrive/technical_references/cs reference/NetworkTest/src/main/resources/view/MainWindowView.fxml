@@ -7,6 +7,6 @@
 <AnchorPane fx:id="content" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainWindowController">
    <children>
       <JFXButton buttonType="RAISED" layoutX="147.0" layoutY="135.0" onAction="#onServerClicked" prefHeight="27.0" prefWidth="68.0" style="-fx-background-color: #42f468;" text="Server" />
-      <JFXButton buttonType="RAISED" layoutX="147.0" layoutY="225.0" prefHeight="27.0" prefWidth="68.0" style="-fx-background-color: #41f4d0;" text="Client" />
+      <JFXButton buttonType="RAISED" layoutX="147.0" layoutY="225.0" onAction="#onClientClicked" prefHeight="27.0" prefWidth="68.0" style="-fx-background-color: #41f4d0;" text="Client" />
    </children>
 </AnchorPane>

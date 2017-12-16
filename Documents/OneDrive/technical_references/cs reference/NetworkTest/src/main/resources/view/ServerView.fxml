@@ -40,7 +40,7 @@
                   <Insets right="40.0" />
                </GridPane.margin></JFXTextField>
             <JFXTextField fx:id="tfPort" promptText="Enter Port Number" GridPane.columnIndex="1" />
-            <JFXButton buttonType="RAISED" onAction="#onConnectClicked" style="-fx-background-color: #42f468;" text="Connect" GridPane.columnIndex="2" />
+            <JFXButton fx:id="btConnect" buttonType="RAISED" onAction="#onConnectClicked" style="-fx-background-color: #42f468;" text="Connect" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>

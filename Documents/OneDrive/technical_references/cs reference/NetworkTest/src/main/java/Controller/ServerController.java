@@ -1,6 +1,7 @@
 package Controller;
 
 import CS.TestServer;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 
@@ -13,6 +14,8 @@ public class ServerController {
     JFXTextField tfMsg;
     @FXML
     JFXTextField tfPort;
+    @FXML
+    JFXButton btConnect;
 
 
     public ServerController(MainWindowController parent) {
@@ -22,16 +25,14 @@ public class ServerController {
     @FXML
     protected void initialize() {
         this.tfMsg.setEditable(false);
-        this.tfMsg.setDisable(true);
+        this.tfMsg.setVisible(false);
         tfPort.requestFocus();
     }
 
     @FXML
     private void onConnectClicked() {
-        this.tfMsg.setDisable(false);
         if(tfPort.getText() == null) {
             this.tfPort.setPromptText("You must enter a port number");
-            this.tfMsg.setDisable(true);
         }
         try{
             Thread t = new TestServer(Integer.parseInt(tfPort.getText()), this);
@@ -39,8 +40,11 @@ public class ServerController {
         }catch (IOException e) {
             e.printStackTrace();
             this.tfPort.setPromptText(e.getMessage());
-            this.tfMsg.setDisable(true);
+            return;
         }
+        this.tfPort.setVisible(false);
+        this.btConnect.setVisible(false);
+        this.tfMsg.setVisible(true);
     }
 
     public void setMessage(String msg) {

@@ -33,6 +33,8 @@ public class ClientController {
         this.tfMsgToServer.setVisible(false);
         this.btSend.setVisible(false);
         this.lbMessage.setVisible(false);
+
+        btConnect.setDefaultButton(true);
     }
 
     @FXML
@@ -62,6 +64,9 @@ public class ClientController {
         this.tfMsgToServer.setVisible(true);
         this.btSend.setVisible(true);
         this.lbMessage.setVisible(true);
+
+        btConnect.setDefaultButton(false);
+        btSend.setDefaultButton(true);
     }
 
     public void setMsgFromServer(String string) {

@@ -24,6 +24,7 @@ public class ServerController {
 
     @FXML
     protected void initialize() {
+        btConnect.setDefaultButton(true);
         this.tfMsg.setEditable(false);
         this.tfMsg.setVisible(false);
         tfPort.requestFocus();
@@ -43,6 +44,7 @@ public class ServerController {
             return;
         }
         this.tfPort.setVisible(false);
+        btConnect.setDisable(true);
         this.btConnect.setVisible(false);
         this.tfMsg.setVisible(true);
     }

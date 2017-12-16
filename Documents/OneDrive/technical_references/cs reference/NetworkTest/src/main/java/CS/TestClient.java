@@ -1,9 +1,17 @@
+package CS;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.net.*;
 import java.io.*;
 
-public class TestClient {
+public class TestClient extends Thread{
 
-    public static void main(String [] args) {
+    public void run() {
         String serverName = args[0];
         int port = Integer.parseInt(args[1]);
         try {

@@ -1,3 +1,6 @@
+package CS;
+
+import Controller.ServerController;
 import sun.awt.windows.ThemeReader;
 
 import java.io.DataInputStream;
@@ -9,8 +12,11 @@ import java.net.SocketTimeoutException;
 
 public class TestServer extends Thread{
     private ServerSocket serverSocket;
+    ServerController serverController;
+
 
     public TestServer(int port) throws IOException {
+        this.serverController = new ServerController();
         serverSocket = new ServerSocket(port);
         serverSocket.setSoTimeout(1000000000);
     }
@@ -34,16 +40,6 @@ public class TestServer extends Thread{
             }catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    public static void main(String [] args) {
-        int port = Integer.parseInt(args[0]);
-        try{
-            Thread t = new TestServer(port);
-            t.start();
-        }catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

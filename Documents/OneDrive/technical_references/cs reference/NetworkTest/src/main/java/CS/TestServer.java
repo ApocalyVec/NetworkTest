@@ -1,6 +1,7 @@
 package CS;
 
 import Controller.ServerController;
+import javafx.util.Duration;
 import sun.awt.windows.ThemeReader;
 
 import java.io.DataInputStream;
@@ -12,33 +13,34 @@ import java.net.SocketTimeoutException;
 
 public class TestServer extends Thread{
     private ServerSocket serverSocket;
-    ServerController serverController;
+    ServerController parent;
 
 
-    public TestServer(int port) throws IOException {
-        this.serverController = new ServerController();
+    public TestServer(int port, ServerController parent) throws IOException {
+        this.parent = parent;
         serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(1000000000);
+        serverSocket.setSoTimeout(Integer.MAX_VALUE);
     }
 
     public void run() {
         while(true) {
             try{
-                System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "…");
+                parent.setMessage("Waiting for client on port " + serverSocket.getLocalPort() + "…");
                 Socket server = serverSocket.accept();
 
-                System.out.println("Just connected to " + server.getRemoteSocketAddress());
+                parent.setMessage("Just connected to " + server.getRemoteSocketAddress());
                 DataInputStream in = new DataInputStream(server.getInputStream());
 
-                System.out.println(in.readUTF());
+                parent.setMessage(in.readUTF());
                 DataOutputStream out = new DataOutputStream(server.getOutputStream());
-                out.writeUTF("Than you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
+                out.writeUTF("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!");
                 server.close();
             }catch (SocketTimeoutException e) {
                 System.out.println("Socket Timed out!");
                 break;
             }catch (IOException e) {
                 e.printStackTrace();
+                parent.setMessage(e.getMessage());
             }
         }
     }
